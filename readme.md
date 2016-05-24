@@ -3,4 +3,4 @@
 
 #Databases 2016
 
-T-SQl stuff
+T-SQL stuff
