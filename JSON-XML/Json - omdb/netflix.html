@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Video Watcher</title>
+	<link rel="stylesheet" type="text/css" href="http://teaching-materials.org/ajax/lib/bootstrap.css">
+
+</head>
+
+<body>
+
+	<div class="container">
+
+		<div class="row">
+			<div class="span12">
+
+				<input id="som" type="text" />
+				<button id="btn">Search Actor</button>
+			</div>
+		</div>
+
+		<div class="row">
+			<div id="videos" class="span3">
+
+			</div>
+			<div class="span9" id="video-watcher">
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="http://teaching-materials.org/ajax/lib/youtube.js"></script>
+	<script type="text/javascript" src="http://teaching-materials.org/ajax/lib/jquery.min.js"></script>
+	<script>
+		$("#btn").click(function () {
+			$("#videos").html("");
+			var actor = $("#som").val();
+
+			$.ajax({
+				url: 'https://community-netflix-roulette.p.mashape.com/api.php?actor=' + actor, // The URL to the API. You can get this in the API page of the API you intend to consume
+				type: 'GET',
+				dataType: 'json',
+				success: function (data) {
+					for (var i = 0; i < data.length; i++) {
+						var mov = "<div><h1>" + data[i].show_title + "</h1>";
+						mov += "<img src='" + data[i].poster + "'/></div>"
+						$("#videos").append(mov);
+					}
+
+				},
+				error: function (err) {
+					console.log(err);
+				},
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("X-Mashape-Authorization", "rKCIFJNUXCmshHhimUBgMIX0pJGYp1ED6itjsnmRUVAIscGoyt"); // Enter here your Mashape key
+				}
+			});
+		})
+	</script>
+</body>
+
+</html>
